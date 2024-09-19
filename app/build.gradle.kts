@@ -58,7 +58,7 @@ android {
         implementation(libs.androidx.constraintlayout)
         implementation("com.github.qamarelsafadi:CurvedBottomNavigation:0.1.3")
         implementation("com.diogobernardino:williamchart:3.10.1")
-        implementation("com.kizitonwose.calendar:view:2.5.4")
+        implementation("com.applandeo:material-calendar-view:1.9.2")
         testImplementation(libs.junit)
         androidTestImplementation(libs.androidx.junit)
         androidTestImplementation(libs.androidx.espresso.core)
