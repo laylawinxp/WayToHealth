@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="pr" />
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.ProfileFragment">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/green">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/circle_border">
+
+                <ImageView
+                    android:id="@+id/profile_image_view"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_margin="0dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/user_profile"
+                    android:contentDescription="profile_image"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:hint="Enter your name"
+            android:padding="16dp"
+            android:textColor="@color/pink"/>
+
+    </LinearLayout>
+</ScrollView>

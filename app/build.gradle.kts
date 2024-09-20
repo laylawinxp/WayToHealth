@@ -50,16 +50,20 @@ android {
     }
 
     dependencies {
+        implementation(libs.mpandroidchart)
+        implementation(libs.curvedbottomnavigation)
+        implementation(libs.williamchart)
+        implementation(libs.material.calendar.view)
+
+//        implementation(libs.design)
+//        implementation(libs.percent)
+//        implementation(libs.cardview.v7)
 
         implementation(libs.androidx.core.ktx)
         implementation(libs.androidx.appcompat)
         implementation(libs.material)
         implementation(libs.androidx.activity)
         implementation(libs.androidx.constraintlayout)
-        implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-        implementation("com.github.qamarelsafadi:CurvedBottomNavigation:0.1.3")
-        implementation("com.diogobernardino:williamchart:3.10.1")
-        implementation ("com.applandeo:material-calendar-view:1.9.2")
         testImplementation(libs.junit)
         androidTestImplementation(libs.androidx.junit)
         androidTestImplementation(libs.androidx.espresso.core)
