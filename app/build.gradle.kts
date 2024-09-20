@@ -54,10 +54,7 @@ android {
         implementation(libs.curvedbottomnavigation)
         implementation(libs.williamchart)
         implementation(libs.material.calendar.view)
-
-//        implementation(libs.design)
-//        implementation(libs.percent)
-//        implementation(libs.cardview.v7)
+        implementation(libs.roundedimageview)
 
         implementation(libs.androidx.core.ktx)
         implementation(libs.androidx.appcompat)
