@@ -1,6 +1,8 @@
 package com.example.waytohealth.fragments
 
+import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -10,7 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.waytohealth.DBHelper
 import com.example.waytohealth.R
@@ -25,6 +30,7 @@ class TrainingFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_training, container, false)
     }
 
+    @SuppressLint("InflateParams")
     override fun onResume() {
         super.onResume()
 
@@ -132,7 +138,7 @@ class TrainingFragment : Fragment() {
             val month = calendar.get(Calendar.MONTH) + 1
             val year = calendar.get(Calendar.YEAR)
 
-            if(!(db.checkDataForDay(day, month, year))){
+            if (!(db.checkDataForDay(day, month, year))) {
                 db.addDataForDay(day, month, year)
             }
 
@@ -143,7 +149,65 @@ class TrainingFragment : Fragment() {
             }
         }
 
+        val buttRate: Button = requireView().findViewById(R.id.rateHealth)
+        buttRate.setOnClickListener {
+            val dialogBinding = layoutInflater.inflate(R.layout.rate_health, null)
+            val myDialog = Dialog(requireContext())
+            myDialog.setContentView(dialogBinding)
+            myDialog.setCancelable(true)
+            myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+            myDialog.show()
 
+            val questions = arrayOf(
+                dialogBinding.findViewById<RadioGroup>(R.id.q1_radioGr),
+                dialogBinding.findViewById<RadioGroup>(R.id.q2_radioGr),
+                dialogBinding.findViewById<RadioGroup>(R.id.q3_radioGr),
+                dialogBinding.findViewById<RadioGroup>(R.id.q4_radioGr),
+                dialogBinding.findViewById<RadioGroup>(R.id.q5_radioGr),
+                dialogBinding.findViewById<RadioGroup>(R.id.q6_radioGr),
+                dialogBinding.findViewById<RadioGroup>(R.id.q7_radioGr),
+                dialogBinding.findViewById<RadioGroup>(R.id.q8_radioGr),
+                dialogBinding.findViewById<RadioGroup>(R.id.q9_radioGr),
+                dialogBinding.findViewById<RadioGroup>(R.id.q10_radioGr)
+            )
+
+            val buttSave: Button = dialogBinding.findViewById(R.id.save_button)
+            buttSave.setOnClickListener {
+                val allAnswersSaved = (1..10).all { index ->
+                    saveAnswer(questions[index - 1], index.toString(), dialogBinding)
+                }
+                if (allAnswersSaved) {
+                    myDialog.dismiss()
+                } else {
+                    Toast.makeText(
+                        requireContext(), "Пожалуйста, ответьте на все вопросы",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            val buttTerminate: Button = dialogBinding.findViewById(R.id.terminate_button)
+            buttTerminate.setOnClickListener {
+                myDialog.dismiss()
+            }
+        }
     }
 
+    private fun saveAnswer(question: RadioGroup, number: String, dialogBinding: View): Boolean {
+        var selected: Boolean = true
+        val selectedId: Int = question.checkedRadioButtonId
+        if (selectedId != -1) {
+            val selectedRadioButton: RadioButton = dialogBinding.findViewById(selectedId)
+            val selectedValue = selectedRadioButton.text.toString()
+            val sharedPrefs =
+                requireContext().getSharedPreferences("HealthPrefs", Context.MODE_PRIVATE)
+            with(sharedPrefs.edit()) {
+                putString("q$number", selectedValue)
+                apply()
+            }
+        } else {
+            selected = false
+        }
+        return selected
+    }
 }
