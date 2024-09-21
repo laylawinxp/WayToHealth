@@ -3,7 +3,5 @@
     android:shape="rectangle">
 
     <solid android:color="@color/pink" />
-
-    <corners
-        android:radius="6dp" /> <!-- Замените 16dp на нужный вам радиус -->
+    <corners android:radius="6dp" />
 </shape>
