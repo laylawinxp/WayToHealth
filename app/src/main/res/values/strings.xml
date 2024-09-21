@@ -6,4 +6,23 @@
     <string name="name">Имя</string>
     <string name="goal">Цель тренировок в месяц</string>
     <string name="achievements">Достижения</string>
+    <string name="rateHealth">Анкета о самочувствии</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="maybe">Отчасти</string>
+    <string name="goodMood">В отличном!</string>
+    <string name="normalMood">Все нормально :)</string>
+    <string name="badMood">Чувствую себя подавленно...</string>
+    <string name="question1">1. Есть ли у Вас хронические заболевания, препятсвтующие занятию спортом?</string>
+    <string name="question2">2. Выспались ли Вы?</string>
+    <string name="question3">3. Насколько давно был последний прием пищи?</string>
+    <string name="question4">4. В каком настроении Вы сейчас находитесь?</string>
+    <string name="question5">5. Можете ли Вы подпрыгнуть?</string>
+    <string name="question6">6. Можете ли Вы наклониться к полу?</string>
+    <string name="question7">7. Чувствуете ли Вы усталость?</string>
+    <string name="question8">8. Учащено ли Ваше дыхание в данный момент?</string>
+    <string name="question9">9. Учащено ли Ваше сердцебиение в данный момент?</string>
+    <string name="question10">10. Какое у Вас давление в данный момент?</string>
+    <string name="save">Сохранить</string>
+    <string name="terminate">Прервать</string>
 </resources>
