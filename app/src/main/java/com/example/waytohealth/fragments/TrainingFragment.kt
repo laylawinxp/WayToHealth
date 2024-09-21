@@ -1,5 +1,8 @@
 package com.example.waytohealth.fragments
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +12,9 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.example.waytohealth.DBHelper
 import com.example.waytohealth.R
+import java.util.Calendar
 
 class TrainingFragment : Fragment() {
 
@@ -113,6 +118,30 @@ class TrainingFragment : Fragment() {
         }
 
         val buttStart: Button = requireView().findViewById(R.id.start)
+
+        buttStart.setOnClickListener {
+            val dialogBinding = layoutInflater.inflate(R.layout.training_layout, null)
+            val myDialog = Dialog(requireContext())
+            myDialog.setContentView(dialogBinding)
+            myDialog.setCancelable(true)
+            myDialog.show()
+
+            val calendar = Calendar.getInstance()
+            val db = DBHelper(requireContext(), null)
+            val day = calendar.get(Calendar.DAY_OF_MONTH)
+            val month = calendar.get(Calendar.MONTH) + 1
+            val year = calendar.get(Calendar.YEAR)
+
+            if(!(db.checkDataForDay(day, month, year))){
+                db.addDataForDay(day, month, year)
+            }
+
+            val buttEnd: Button = dialogBinding.findViewById(R.id.end)
+            buttEnd.setOnClickListener {
+                db.changeTrainingsValue(day, month, year)
+                myDialog.dismiss()
+            }
+        }
 
 
     }

@@ -24,27 +24,29 @@ class DBHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
         onCreate(db)
     }
 
-//    fun displayAllData() {
-//        val db = this.readableDatabase
-//        val query = "SELECT * FROM info"
-//
-//        val cursor = db.rawQuery(query, null)
-//
-//        if (cursor.moveToFirst()) {
-//            do {
-//                val id = cursor.getInt(0)
-//                val day = cursor.getString(1)
-//                val month = cursor.getInt(2)
-//                val w = cursor.getString(3)
-//                Log.e("DEBUG","ID: $id, day: $day, month: $month  , w: $w")
-//
-//            } while (cursor.moveToNext())
-//        }
-//
-//        cursor.close()
-//    }
+    fun getAllDates(): MutableList<Triple<Int, Int, Int>> {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM trainings"
+        val listOfTriples: MutableList<Triple<Int, Int, Int>> = mutableListOf()
 
-    fun addDataForDay(day: Int, month: Int, year: Int){                     //vika v123
+        val cursor = db.rawQuery(query, null)
+
+        if (cursor.moveToFirst()) {
+            do {
+                val day = cursor.getInt(0)
+                val month = cursor.getInt(1)
+                val year = cursor.getInt(2)
+
+                listOfTriples.add(Triple(day, month, year))
+
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        return listOfTriples
+    }
+
+    fun addDataForDay(day: Int, month: Int, year: Int){
         val values = ContentValues()
         values.put("day", day)
         values.put("month", month)
@@ -66,7 +68,7 @@ class DBHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
 
     fun getCurrentTrainingsOfDay(day: Int, month: Int, year: Int): Int{
         val db = this.readableDatabase
-        val query = "SELECT water FROM trainings WHERE day = '$day' AND month = '$month' AND year = '$year'"
+        val query = "SELECT training FROM trainings WHERE day = '$day' AND month = '$month' AND year = '$year'"
         val cursor = db.rawQuery(query, null)
         var count = 0
         if (cursor.moveToFirst()) {
@@ -76,13 +78,12 @@ class DBHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
         return count
     }
 
-    fun changeWaterValue(day: Int, month: Int, year: Int){
+    fun changeTrainingsValue(day: Int, month: Int, year: Int){
         val db = this.writableDatabase
         val currentTrainings = getCurrentTrainingsOfDay(day, month, year)
         val contentValues = ContentValues()
         val updatedTrainings = currentTrainings + 1
         contentValues.put("training", updatedTrainings)
-        db.update("drinks", contentValues, "day = '$day' AND month = '$month' AND year = '$year'", null)
+        db.update("trainings", contentValues, "day = '$day' AND month = '$month' AND year = '$year'", null)
     }
-
 }

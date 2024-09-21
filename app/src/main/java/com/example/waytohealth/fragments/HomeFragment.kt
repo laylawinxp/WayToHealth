@@ -1,8 +1,8 @@
 package com.example.waytohealth.fragments
 
 import android.annotation.SuppressLint
-import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,16 +12,16 @@ import com.applandeo.materialcalendarview.CalendarView
 import androidx.core.content.ContextCompat
 import com.applandeo.materialcalendarview.CalendarDay
 import com.db.williamchart.view.DonutChartView
+import com.example.waytohealth.DBHelper
 import com.example.waytohealth.R
 import com.example.waytohealth.databinding.FragmentHomeBinding
-import com.github.mikephil.charting.charts.PieChart
 import java.util.Calendar
 
 class HomeFragment : Fragment() {
 
     private lateinit var calendarView: CalendarView
     private var events: MutableMap<String,String> = mutableMapOf()
-    private lateinit var pieChart: PieChart
+
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -30,8 +30,8 @@ class HomeFragment : Fragment() {
         private const val ANIMATION_DURATION = 3000L
 
         private var donutSet = mutableListOf(
-            20f,
-            80f
+            0f,
+            100f
         )
 
         private var barSet = mutableListOf(
@@ -64,16 +64,6 @@ class HomeFragment : Fragment() {
 
         calendarView.setHeaderColor(greenColor)
 
-        val calendars: ArrayList<CalendarDay> = ArrayList()
-        val calendar = Calendar.getInstance()
-        calendar.set(2024, 7,20)
-        val calendarDay = CalendarDay(calendar)
-        calendarDay.labelColor = R.color.pink
-        calendarDay.imageResource = R.drawable.dumbbell
-        calendars.add(calendarDay)
-        events["10-09-2024"] = "Training"
-        calendarView.setCalendarDays(calendars)
-
         val donutChart = requireView().findViewById<DonutChartView>(R.id.donatChart)
 
         donutChart.donutColors = intArrayOf(
@@ -92,6 +82,36 @@ class HomeFragment : Fragment() {
         val barChart = requireView().findViewById<com.db.williamchart.view.BarChartView>(R.id.barChart)
         barChart.animation.duration = ANIMATION_DURATION
         barChart.animate(barSet)
+
+        val calendar = Calendar.getInstance()
+
+        val db = DBHelper(requireContext(), null)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH) + 1
+        val year = calendar.get(Calendar.YEAR)
+
+        if(!(db.checkDataForDay(day, month, year))){
+            db.addDataForDay(day, month, year)
+        }
+
+        val allDates = db.getAllDates()
+        val calendars: ArrayList<CalendarDay> = ArrayList()
+
+        for (el in allDates){
+            val day_ = el.first
+            val month_ = el.second
+            val year_ = el.third
+            if (db.getCurrentTrainingsOfDay(day_, month_, year_) > 0){
+                calendar.set(year_, month_ - 1, day_)
+                val calendarDay = CalendarDay(calendar)
+                calendarDay.labelColor = R.color.pink
+                calendarDay.imageResource = R.drawable.dumbbell
+                calendars.add(calendarDay)
+                calendarView.setCalendarDays(calendars)
+            }
+        }
+
+
     }
 
 

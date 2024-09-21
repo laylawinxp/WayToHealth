@@ -16,7 +16,8 @@
         <com.applandeo.materialcalendarview.CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ostrovsky_bold"/>
 
 
         <androidx.cardview.widget.CardView
@@ -48,8 +49,9 @@
                         android:gravity="center"
                         android:layout_gravity="center"
                         android:text="За этот месяц вы"
-                        android:textColor="@color/white"
-                        android:textSize="20sp"/>
+                        android:textSize="16sp"
+                        android:fontFamily="@font/ostrovsky_bold"
+                        android:textColor="@color/white"/>
 
                     <TextView
                         android:id="@+id/donutText"
@@ -57,17 +59,19 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:textColor="@color/white"
+                        android:fontFamily="@font/ostrovsky_bold"
                         android:layout_gravity="center"
-                        android:textSize="20sp"/>
+                        android:textSize="16sp"/>
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
+                        android:textSize="16sp"
                         android:textColor="@color/white"
+                        android:fontFamily="@font/ostrovsky_bold"
                         android:layout_gravity="center"
-                        android:text="от цели"
-                        android:textSize="20sp"/>
+                        android:text="от цели"/>
 
                 </LinearLayout>
 
@@ -112,6 +116,7 @@
                     android:textColor="@color/white"
                     android:layout_gravity="center"
                     android:text="Ваш прогресс за 6 месяцев"
+                    android:fontFamily="@font/ostrovsky_bold"
                     android:textSize="20sp"
                     android:layout_margin="10dp"/>
 
@@ -124,11 +129,11 @@
                     android:layerType="software"
                     app:chart_barsColor="@color/pink"
                     app:chart_barsRadius="10dp"
+                    android:fontFamily="@font/ostrovsky_bold"
                     app:chart_labelsColor="@color/white"
                     android:layout_marginTop="20dp"
                     android:paddingBottom="20dp"
                     app:chart_axis = "x"
-                    app:chart_labelsSize="18sp"
                     app:chart_spacing="25dp" />
 
             </LinearLayout>
