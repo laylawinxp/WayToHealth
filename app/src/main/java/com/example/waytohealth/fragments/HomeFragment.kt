@@ -16,15 +16,18 @@ import com.example.waytohealth.DBHelper
 import com.example.waytohealth.R
 import com.example.waytohealth.databinding.FragmentHomeBinding
 import java.util.Calendar
+import kotlin.math.abs
 
 class HomeFragment : Fragment() {
 
     private lateinit var calendarView: CalendarView
-    private var events: MutableMap<String,String> = mutableMapOf()
-
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+
+    private val monthsName = listOf(
+        "янв", "фев", "мар", "апр", "май", "июн", "июл","авг","сен","окт","ноя","дек"
+    )
 
     companion object {
         private const val ANIMATION_DURATION = 3000L
@@ -34,15 +37,16 @@ class HomeFragment : Fragment() {
             100f
         )
 
-        private var barSet = mutableListOf(
-            "мар" to 3F,
-            "апр" to 4F,
-            "май" to 6F,
-            "июн" to 1F,
-            "июл" to 3F,
-            "авг" to 2F,
-            "сен" to 5F,
+        private var barSet = mutableListOf<Pair<String, Float>>(
+            "" to 0F,
+            "" to 0F,
+            "" to 0F,
+            "" to 0F,
+            "" to 0F,
+            "" to 0F
         )
+
+        val goal = 20
     }
 
 
@@ -63,7 +67,6 @@ class HomeFragment : Fragment() {
         calendarView = requireView().findViewById(R.id.calendarView)
 
         calendarView.setHeaderColor(greenColor)
-
         val donutChart = requireView().findViewById<DonutChartView>(R.id.donatChart)
 
         donutChart.donutColors = intArrayOf(
@@ -71,17 +74,6 @@ class HomeFragment : Fragment() {
             whiteColor
         )
         donutChart.animation.duration = ANIMATION_DURATION
-        donutChart.animate(donutSet)
-
-        val percentOfTraining = kotlin.math.round(donutSet[0]).toInt()
-
-        val donutText = requireView().findViewById<TextView>(R.id.donutText)
-        donutText.text = "выполнили ${percentOfTraining}%"
-
-
-        val barChart = requireView().findViewById<com.db.williamchart.view.BarChartView>(R.id.barChart)
-        barChart.animation.duration = ANIMATION_DURATION
-        barChart.animate(barSet)
 
         val calendar = Calendar.getInstance()
 
@@ -94,24 +86,57 @@ class HomeFragment : Fragment() {
             db.addDataForDay(day, month, year)
         }
 
+        if(!(db.checkDataForMonth(month))){
+            db.addDataForMonth(month)
+        }
+
         val allDates = db.getAllDates()
+        db.displayAllData()
         val calendars: ArrayList<CalendarDay> = ArrayList()
 
-        for (el in allDates){
+        for (el in allDates) {
             val day_ = el.first
             val month_ = el.second
             val year_ = el.third
-            if (db.getCurrentTrainingsOfDay(day_, month_, year_) > 0){
+            val currTrainings = db.getCurrentTrainingsOfDay(day_, month_, year_)
+            if (currTrainings > 0) {
+                val calendar = Calendar.getInstance()
                 calendar.set(year_, month_ - 1, day_)
                 val calendarDay = CalendarDay(calendar)
                 calendarDay.labelColor = R.color.pink
                 calendarDay.imageResource = R.drawable.dumbbell
                 calendars.add(calendarDay)
-                calendarView.setCalendarDays(calendars)
             }
         }
+        calendarView.setCalendarDays(calendars)
+        if (!(barSet.any { it.first == monthsName[month - 1] })) {
+            for (i in 0 .. 5) {
+                val monthIndex = (month - 1 - i + 12) % 12
+                val monthName = monthsName[monthIndex]
+                Log.e("DEBUG", "$monthName")
 
+                if (db.checkDataForMonth(monthIndex + 1)) {
+                    barSet[5 - i] = monthName to db.getCurrentTrainingsOfMonth(monthIndex + 1).toFloat()
+                } else {
+                    barSet[5 - i] = monthName to 0.1F
+                }
+            }
+        }
+        db.displayAllDataForM()
 
+        val barChart = requireView().findViewById<com.db.williamchart.view.BarChartView>(R.id.barChart)
+        barChart.animation.duration = ANIMATION_DURATION
+        barChart.animate(barSet)
+
+        val percent  =100F*db.getCurrentTrainingsOfMonth(month).toFloat()/goal
+
+        val percentOfTraining = kotlin.math.round(percent).toInt()
+        donutSet[0] = percent
+        donutSet[1] = 100 - percent
+        donutChart.animate(donutSet)
+
+        val donutText = requireView().findViewById<TextView>(R.id.donutText)
+        donutText.text = "выполнили ${percentOfTraining}%"
     }
 
 

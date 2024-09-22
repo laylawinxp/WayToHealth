@@ -145,6 +145,7 @@ class TrainingFragment : Fragment() {
             val buttEnd: Button = dialogBinding.findViewById(R.id.end)
             buttEnd.setOnClickListener {
                 db.changeTrainingsValue(day, month, year)
+                db.changeTrainingsForMonthValue(month)
                 myDialog.dismiss()
             }
         }

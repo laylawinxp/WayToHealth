@@ -17,7 +17,8 @@
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/ostrovsky_bold"/>
+            android:fontFamily="@font/ostrovsky_bold"
+            app:todayLabelColor="@color/green" />
 
 
         <androidx.cardview.widget.CardView
@@ -117,7 +118,7 @@
                     android:layout_gravity="center"
                     android:text="Ваш прогресс за 6 месяцев"
                     android:fontFamily="@font/ostrovsky_bold"
-                    android:textSize="20sp"
+                    android:textSize="18sp"
                     android:layout_margin="10dp"/>
 
                 <com.db.williamchart.view.BarChartView
