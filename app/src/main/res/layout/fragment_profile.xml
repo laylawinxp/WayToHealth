@@ -60,7 +60,8 @@
             app:endIconTintMode="src_in"
             app:boxCornerRadiusTopEnd="@dimen/cardview_default_radius"
             app:hintEnabled="true"
-            app:startIconDrawable="@drawable/person">
+            app:startIconDrawable="@drawable/person"
+            android:textColorHint="@color/pink">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameEditText"
@@ -91,7 +92,8 @@
             app:endIconTint="@color/pink"
             app:endIconTintMode="src_in"
             app:hintEnabled="true"
-            app:startIconDrawable="@drawable/age">
+            app:startIconDrawable="@drawable/age"
+            android:textColorHint="@color/pink">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ageEditText"
@@ -115,18 +117,19 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/goal"
+            android:textColorHint="@color/pink"
             app:boxStrokeColor="@color/green"
             app:boxStrokeWidth="2dp"
             app:counterEnabled="false"
             app:endIconMode="clear_text"
-            app:hintAnimationEnabled="true"
-            app:hintTextColor="@color/pink"
-            app:startIconTint="@color/pink"
-            app:startIconTintMode="src_in"
             app:endIconTint="@color/pink"
             app:endIconTintMode="src_in"
+            app:hintAnimationEnabled="true"
             app:hintEnabled="true"
-            app:startIconDrawable="@drawable/goal">
+            app:hintTextColor="@color/pink"
+            app:startIconDrawable="@drawable/goal"
+            app:startIconTint="@color/pink"
+            app:startIconTintMode="src_in">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/goalEditText"
