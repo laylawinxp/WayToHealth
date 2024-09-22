@@ -1,18 +1,17 @@
 package com.example.waytohealth
 
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
+import android.net.Uri
 import android.util.Log
 
-class DBHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?) :
-    SQLiteOpenHelper(context, "way_to_health_db", factory, 2){
+class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
+    SQLiteOpenHelper(context, "way_to_health_bd", factory, 1){
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val query1 = "CREATE TABLE IF NOT EXISTS info (name TEXT, goal INT, age INT)"
+        val query1 = "CREATE TABLE IF NOT EXISTS info (id INT, name TEXT, goal INT, age INT, image_uri TEXT)"
         val query = "CREATE TABLE IF NOT EXISTS trainings (day INT, month INT, year INT, training INT)"
         val query2 = "CREATE TABLE IF NOT EXISTS trainings_in_month (month INT, training INT)"
         db!!.execSQL(query)
@@ -21,9 +20,14 @@ class DBHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        db!!.execSQL("DROP TABLE IF EXISTS users")
-        db.execSQL("DROP TABLE IF EXISTS drinks")
-        onCreate(db)
+    }
+
+    fun checkInfo(): Boolean {
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT * FROM info WHERE id = 1", null)
+        val result = cursor.moveToFirst()
+        cursor.close()
+        return result
     }
 
     fun getAllDates(): MutableList<Triple<Int, Int, Int>> {
@@ -90,6 +94,50 @@ class DBHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
         db.close()
     }
 
+    fun getAllInfo(): String {
+        val db = this.readableDatabase
+        val query = "SELECT * FROM info"
+
+        val cursor = db.rawQuery(query, null)
+
+        var uri = ""
+        var id = -1
+        if (cursor.moveToFirst()) {
+            do {
+                id = cursor.getInt(0)
+                uri = cursor.getString(4)
+
+            } while (cursor.moveToNext())
+        }
+
+        cursor.close()
+        Log.e("DEBUG", "id = $id uri = $uri")
+        return uri
+    }
+
+    fun getUri(): String? {
+        getAllInfo()
+        val db = this.readableDatabase
+        val query = "SELECT image_uri FROM info WHERE id = 1"
+        val cursor = db.rawQuery(query, null)
+        var uri = ""
+        if (cursor.moveToFirst()) {
+            uri = cursor.getString(0)
+        }
+        cursor.close()
+        if (uri == ""){
+            return null
+        }
+        return uri
+    }
+
+    fun updateUri(uri: Uri){
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put("image_uri", uri.toString())
+        db.update("info", contentValues, "", null)
+    }
+
     fun addDataForDay(day: Int, month: Int, year: Int){
         val values = ContentValues()
         values.put("day", day)
@@ -100,6 +148,26 @@ class DBHelper(val context: Context, val factory: SQLiteDatabase.CursorFactory?)
         val db = this.writableDatabase
         db.insert("trainings", null, values)
         db.close()
+    }
+
+    fun addInfo(){
+        val values = ContentValues()
+        values.put("id", 1)
+        values.put("name", "")
+        values.put("goal", 20)
+        values.put("age", 0)
+        values.put("image_uri", "")
+        val db = this.writableDatabase
+        val result = db.insert("info", null, values)
+        if (result == -1L) {
+            Log.e("DEBUG", "Failed to insert data")
+        } else {
+            Log.e("DEBUG", "Data inserted successfully with id: $result")
+        }
+        db.close()
+        val ee = getAllInfo()
+        Log.e("DEBUG", "$ee")
+
     }
 
     fun checkDataForDay(day: Int, month: Int, year: Int): Boolean{

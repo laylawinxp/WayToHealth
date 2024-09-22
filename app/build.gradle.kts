@@ -55,7 +55,6 @@ android {
         implementation(libs.williamchart)
         implementation(libs.material.calendar.view)
         implementation(libs.roundedimageview)
-
         implementation(libs.androidx.core.ktx)
         implementation(libs.androidx.appcompat)
         implementation("com.google.android.material:material:1.0.0")
