@@ -2,21 +2,19 @@ package com.example.waytohealth.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.applandeo.materialcalendarview.CalendarView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.applandeo.materialcalendarview.CalendarDay
+import com.applandeo.materialcalendarview.CalendarView
 import com.db.williamchart.view.DonutChartView
 import com.example.waytohealth.DBHelper
 import com.example.waytohealth.R
 import com.example.waytohealth.databinding.FragmentHomeBinding
 import java.util.Calendar
-import kotlin.math.abs
 
 class HomeFragment : Fragment() {
 
@@ -126,6 +124,7 @@ class HomeFragment : Fragment() {
             requireView().findViewById<com.db.williamchart.view.BarChartView>(R.id.barChart)
         barChart.animation.duration = ANIMATION_DURATION
         barChart.animate(barSet)
+        barChart.labelsSize = 35f
 
         val percent = 100F * db.getCurrentTrainingsOfMonth(month).toFloat() / goal
 
