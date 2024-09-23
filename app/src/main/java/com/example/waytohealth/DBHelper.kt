@@ -8,11 +8,13 @@ import android.net.Uri
 import android.util.Log
 
 class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
-    SQLiteOpenHelper(context, "way_to_health_bd", factory, 1){
+    SQLiteOpenHelper(context, "way_to_health_bd", factory, 1) {
 
     override fun onCreate(db: SQLiteDatabase?) {
-        val query1 = "CREATE TABLE IF NOT EXISTS info (id INT, name TEXT, goal INT, age INT, image_uri TEXT)"
-        val query = "CREATE TABLE IF NOT EXISTS trainings (day INT, month INT, year INT, training INT)"
+        val query1 =
+            "CREATE TABLE IF NOT EXISTS info (id INT, name TEXT, goal INT, age INT, image_uri TEXT)"
+        val query =
+            "CREATE TABLE IF NOT EXISTS trainings (day INT, month INT, year INT, training INT)"
         val query2 = "CREATE TABLE IF NOT EXISTS trainings_in_month (month INT, training INT)"
         db!!.execSQL(query)
         db.execSQL(query1)
@@ -28,6 +30,45 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         val result = cursor.moveToFirst()
         cursor.close()
         return result
+    }
+
+    fun addProfileData(name: String, age: Int, goal: Int) {
+        val values = ContentValues()
+        values.put("name", name)
+        values.put("age", age)
+        values.put("goal", goal)
+        val db = this.writableDatabase
+        db.insert("info", null, values)
+        db.close()
+    }
+
+    fun getProfileData(): Triple<String, Int, Int>? {
+        val db = this.readableDatabase
+        val query = "SELECT name, age, goal FROM info"
+        val cursor = db.rawQuery(query, null)
+
+        val triple: Triple<String, Int, Int>?
+
+        if (cursor.moveToFirst()) {
+            val name = cursor.getString(0)
+            val age = cursor.getInt(1)
+            val goal = cursor.getInt(2)
+            triple = Triple(name, age, goal)
+        } else {
+            triple = null
+        }
+
+        cursor.close()
+        return triple
+    }
+
+    fun updateProfileData(name: String, age: Int, goal: Int) {
+        val db = this.writableDatabase
+        val contentValues = ContentValues()
+        contentValues.put("name", name)
+        contentValues.put("age", age)
+        contentValues.put("goal", goal)
+        db.update("info", contentValues, "", null)
     }
 
     fun getAllDates(): MutableList<Triple<Int, Int, Int>> {
@@ -85,7 +126,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         cursor.close()
     }
 
-    fun addDataForMonth(month: Int){
+    fun addDataForMonth(month: Int) {
         val values = ContentValues()
         values.put("month", month)
         values.put("training", 0)
@@ -125,20 +166,20 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
             uri = cursor.getString(0)
         }
         cursor.close()
-        if (uri == ""){
+        if (uri == "") {
             return null
         }
         return uri
     }
 
-    fun updateUri(uri: Uri){
+    fun updateUri(uri: Uri) {
         val db = this.writableDatabase
         val contentValues = ContentValues()
         contentValues.put("image_uri", uri.toString())
         db.update("info", contentValues, "", null)
     }
 
-    fun addDataForDay(day: Int, month: Int, year: Int){
+    fun addDataForDay(day: Int, month: Int, year: Int) {
         val values = ContentValues()
         values.put("day", day)
         values.put("month", month)
@@ -150,7 +191,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         db.close()
     }
 
-    fun addInfo(){
+    fun addInfo() {
         val values = ContentValues()
         values.put("id", 1)
         values.put("name", "")
@@ -170,15 +211,18 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     }
 
-    fun checkDataForDay(day: Int, month: Int, year: Int): Boolean{
+    fun checkDataForDay(day: Int, month: Int, year: Int): Boolean {
         val db = this.readableDatabase
-        val cursor = db.rawQuery("SELECT * FROM trainings WHERE day = '$day' AND month = '$month' AND year = '$year'", null)
+        val cursor = db.rawQuery(
+            "SELECT * FROM trainings WHERE day = '$day' AND month = '$month' AND year = '$year'",
+            null
+        )
         val result = cursor.moveToFirst()
         cursor.close()
         return result
     }
 
-    fun checkDataForMonth(month: Int): Boolean{
+    fun checkDataForMonth(month: Int): Boolean {
         val db = this.readableDatabase
         val cursor = db.rawQuery("SELECT * FROM trainings_in_month WHERE month = '$month'", null)
         val result = cursor.moveToFirst()
@@ -186,9 +230,10 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         return result
     }
 
-    fun getCurrentTrainingsOfDay(day: Int, month: Int, year: Int): Int{
+    fun getCurrentTrainingsOfDay(day: Int, month: Int, year: Int): Int {
         val db = this.readableDatabase
-        val query = "SELECT training FROM trainings WHERE day = '$day' AND month = '$month' AND year = '$year'"
+        val query =
+            "SELECT training FROM trainings WHERE day = '$day' AND month = '$month' AND year = '$year'"
         val cursor = db.rawQuery(query, null)
         var count = 0
         if (cursor.moveToFirst()) {
@@ -198,7 +243,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         return count
     }
 
-    fun getCurrentTrainingsOfMonth(month: Int): Int{
+    fun getCurrentTrainingsOfMonth(month: Int): Int {
         val db = this.readableDatabase
         val query = "SELECT training FROM trainings_in_month WHERE month = '$month'"
         val cursor = db.rawQuery(query, null)
@@ -210,16 +255,18 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         return count
     }
 
-    fun changeTrainingsValue(day: Int, month: Int, year: Int){
+    fun changeTrainingsValue(day: Int, month: Int, year: Int) {
         val db = this.writableDatabase
         val currentTrainings = getCurrentTrainingsOfDay(day, month, year)
         val contentValues = ContentValues()
         val updatedTrainings = currentTrainings + 1
         contentValues.put("training", updatedTrainings)
-        db.update("trainings", contentValues, "day = '$day' AND month = '$month' AND year = '$year'", null)
+        db.update(
+            "trainings", contentValues, "day = '$day' AND month = '$month' AND year = '$year'", null
+        )
     }
 
-    fun changeTrainingsForMonthValue(month: Int){
+    fun changeTrainingsForMonthValue(month: Int) {
         val db = this.writableDatabase
         val currentTrainings = getCurrentTrainingsOfMonth(month)
         val contentValues = ContentValues()
