@@ -26,7 +26,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val monthsName = listOf(
-        "янв", "фев", "мар", "апр", "май", "июн", "июл","авг","сен","окт","ноя","дек"
+        "янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"
     )
 
     companion object {
@@ -82,11 +82,11 @@ class HomeFragment : Fragment() {
         val month = calendar.get(Calendar.MONTH) + 1
         val year = calendar.get(Calendar.YEAR)
 
-        if(!(db.checkDataForDay(day, month, year))){
+        if (!(db.checkDataForDay(day, month, year))) {
             db.addDataForDay(day, month, year)
         }
 
-        if(!(db.checkDataForMonth(month))){
+        if (!(db.checkDataForMonth(month))) {
             db.addDataForMonth(month)
         }
 
@@ -110,22 +110,24 @@ class HomeFragment : Fragment() {
         }
         calendarView.setCalendarDays(calendars)
         if (!(barSet.any { it.first == monthsName[month - 1] })) {
-            for (i in 0 .. 5) {
+            for (i in 0..5) {
                 val monthIndex = (month - 1 - i + 12) % 12
                 val monthName = monthsName[monthIndex]
                 if (db.checkDataForMonth(monthIndex + 1)) {
-                    barSet[5 - i] = monthName to db.getCurrentTrainingsOfMonth(monthIndex + 1).toFloat()
+                    barSet[5 - i] =
+                        monthName to db.getCurrentTrainingsOfMonth(monthIndex + 1).toFloat()
                 } else {
                     barSet[5 - i] = monthName to 0.1F
                 }
             }
         }
 
-        val barChart = requireView().findViewById<com.db.williamchart.view.BarChartView>(R.id.barChart)
+        val barChart =
+            requireView().findViewById<com.db.williamchart.view.BarChartView>(R.id.barChart)
         barChart.animation.duration = ANIMATION_DURATION
         barChart.animate(barSet)
 
-        val percent  =100F*db.getCurrentTrainingsOfMonth(month).toFloat()/goal
+        val percent = 100F * db.getCurrentTrainingsOfMonth(month).toFloat() / goal
 
         val percentOfTraining = kotlin.math.round(percent).toInt()
         donutSet[0] = percent
@@ -135,7 +137,5 @@ class HomeFragment : Fragment() {
         val donutText = requireView().findViewById<TextView>(R.id.donutText)
         donutText.text = "выполнили ${percentOfTraining}%"
     }
-
-
 
 }

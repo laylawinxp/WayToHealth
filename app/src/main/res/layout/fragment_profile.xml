@@ -48,20 +48,20 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:hint="@string/name"
+            android:textColorHint="@color/pink"
+            app:boxCornerRadiusTopEnd="@dimen/cardview_default_radius"
             app:boxStrokeColor="@color/green"
             app:boxStrokeWidth="2dp"
             app:counterEnabled="false"
             app:endIconMode="clear_text"
-            app:hintAnimationEnabled="true"
-            app:hintTextColor="@color/pink"
-            app:startIconTint="@color/pink"
-            app:startIconTintMode="src_in"
             app:endIconTint="@color/pink"
             app:endIconTintMode="src_in"
-            app:boxCornerRadiusTopEnd="@dimen/cardview_default_radius"
+            app:hintAnimationEnabled="true"
             app:hintEnabled="true"
+            app:hintTextColor="@color/pink"
             app:startIconDrawable="@drawable/person"
-            android:textColorHint="@color/pink">
+            app:startIconTint="@color/pink"
+            app:startIconTintMode="src_in">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameEditText"
@@ -80,20 +80,20 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:hint="@string/age"
+            android:textColorHint="@color/pink"
             app:boxStrokeColor="@color/green"
             app:boxStrokeWidth="2dp"
-            android:hint="@string/age"
             app:counterEnabled="false"
             app:endIconMode="clear_text"
-            app:hintAnimationEnabled="true"
-            app:hintTextColor="@color/pink"
-            app:startIconTint="@color/pink"
-            app:startIconTintMode="src_in"
             app:endIconTint="@color/pink"
             app:endIconTintMode="src_in"
+            app:hintAnimationEnabled="true"
             app:hintEnabled="true"
+            app:hintTextColor="@color/pink"
             app:startIconDrawable="@drawable/age"
-            android:textColorHint="@color/pink">
+            app:startIconTint="@color/pink"
+            app:startIconTintMode="src_in">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ageEditText"
@@ -143,6 +143,17 @@
                 android:textColor="@color/pink" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/save_profile_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/ostrovsky_bold"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/green"
+            android:text="@string/save" />
 
         <TextView
             android:id="@+id/tvAchievementsTitle"
