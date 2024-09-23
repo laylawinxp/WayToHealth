@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
             100f
         )
 
-        private var barSet = mutableListOf<Pair<String, Float>>(
+        private var barSet = mutableListOf(
             "" to 0F,
             "" to 0F,
             "" to 0F,
@@ -113,8 +113,6 @@ class HomeFragment : Fragment() {
             for (i in 0 .. 5) {
                 val monthIndex = (month - 1 - i + 12) % 12
                 val monthName = monthsName[monthIndex]
-                Log.e("DEBUG", "$monthName")
-
                 if (db.checkDataForMonth(monthIndex + 1)) {
                     barSet[5 - i] = monthName to db.getCurrentTrainingsOfMonth(monthIndex + 1).toFloat()
                 } else {
@@ -122,7 +120,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-        db.displayAllDataForM()
 
         val barChart = requireView().findViewById<com.db.williamchart.view.BarChartView>(R.id.barChart)
         barChart.animation.duration = ANIMATION_DURATION
