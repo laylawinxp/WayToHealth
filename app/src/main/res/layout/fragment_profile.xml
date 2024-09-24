@@ -2,6 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profileFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -180,21 +181,21 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/person" />
+                android:src="@drawable/one_day" />
 
             <ImageView
                 android:id="@+id/ivIcon2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/person" />
+                android:src="@drawable/five_days_bw" />
 
             <ImageView
                 android:id="@+id/ivIcon3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/person" />
+                android:src="@drawable/fifteen_days_bw" />
         </LinearLayout>
 
         <LinearLayout
@@ -209,21 +210,21 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/person" />
+                android:src="@drawable/thirty_days" />
 
             <ImageView
                 android:id="@+id/ivIcon5"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/person" />
+                android:src="@drawable/fifty_days_bw" />
 
             <ImageView
                 android:id="@+id/ivIcon6"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/person" />
+                android:src="@drawable/hundred_days_bw" />
         </LinearLayout>
 
         <LinearLayout
@@ -238,21 +239,21 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/person" />
+                android:src="@drawable/flexibility_bw" />
 
             <ImageView
                 android:id="@+id/ivIcon8"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/person" />
+                android:src="@drawable/power_bw" />
 
             <ImageView
                 android:id="@+id/ivIcon9"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/person" />
+                android:src="@drawable/balance_bw" />
         </LinearLayout>
 
         <LinearLayout
