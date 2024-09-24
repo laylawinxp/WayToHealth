@@ -2,10 +2,12 @@ package com.example.waytohealth.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.applandeo.materialcalendarview.CalendarDay
@@ -27,6 +29,8 @@ class HomeFragment : Fragment() {
         "янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"
     )
 
+    private val fillGoal: String = "Выберете цель количества тренировок"
+
     companion object {
         private const val ANIMATION_DURATION = 3000L
 
@@ -43,8 +47,6 @@ class HomeFragment : Fragment() {
             "" to 0F,
             "" to 0F
         )
-
-        val goal = 20
     }
 
 
@@ -115,16 +117,25 @@ class HomeFragment : Fragment() {
                     barSet[5 - i] =
                         monthName to db.getCurrentTrainingsOfMonth(monthIndex + 1).toFloat()
                 } else {
-                    barSet[5 - i] = monthName to 0.1F
+                    barSet[5 - i] = monthName to 0F
                 }
             }
         }
+
+        val i = barSet.indexOfFirst{ it.first == monthsName[month - 1]}
+        barSet[i] = monthsName[month - 1] to db.getCurrentTrainingsOfMonth(month).toFloat()
 
         val barChart =
             requireView().findViewById<com.db.williamchart.view.BarChartView>(R.id.barChart)
         barChart.animation.duration = ANIMATION_DURATION
         barChart.animate(barSet)
-        barChart.labelsSize = 35f
+        barChart.labelsSize = 50f
+
+        var goal = db.getGoal()
+        if (goal == 0){
+            goal = 20
+            Toast.makeText(requireContext(), fillGoal, Toast.LENGTH_SHORT).show()
+        }
 
         val percent = 100F * db.getCurrentTrainingsOfMonth(month).toFloat() / goal
 

@@ -12,7 +12,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     override fun onCreate(db: SQLiteDatabase?) {
         val query1 =
-            "CREATE TABLE IF NOT EXISTS info (id INT, name TEXT, goal INT, age INT, image_uri TEXT)"
+            "CREATE TABLE IF NOT EXISTS info (id INT, name TEXT, goal INT, age INT)"
         val query =
             "CREATE TABLE IF NOT EXISTS trainings (day INT, month INT, year INT, training INT)"
         val query2 = "CREATE TABLE IF NOT EXISTS trainings_in_month (month INT, training INT)"
@@ -34,6 +34,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     fun addProfileData(name: String, age: Int, goal: Int) {
         val values = ContentValues()
+        values.put("id", 1)
         values.put("name", name)
         values.put("age", age)
         values.put("goal", goal)
@@ -44,7 +45,7 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
     fun getProfileData(): Triple<String, Int, Int>? {
         val db = this.readableDatabase
-        val query = "SELECT name, age, goal FROM info"
+        val query = "SELECT name, age, goal FROM info WHERE id = 1"
         val cursor = db.rawQuery(query, null)
 
         val triple: Triple<String, Int, Int>?
@@ -172,11 +173,16 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         return uri
     }
 
-    fun updateUri(uri: Uri) {
-        val db = this.writableDatabase
-        val contentValues = ContentValues()
-        contentValues.put("image_uri", uri.toString())
-        db.update("info", contentValues, "", null)
+    fun getGoal(): Int {
+        val db = this.readableDatabase
+        val query = "SELECT goal FROM info WHERE id = 1"
+        val cursor = db.rawQuery(query, null)
+        var goal = 0
+        if (cursor.moveToFirst()) {
+            goal = cursor.getInt(0)
+        }
+        cursor.close()
+        return goal
     }
 
     fun addDataForDay(day: Int, month: Int, year: Int) {

@@ -25,6 +25,7 @@ class ProfileFragment : Fragment() {
     private val PICK_IMAGE = 1
     private val warning: String = "Пожалуйста, заполните все поля"
     private val saved: String = "Данные сохранены"
+    private val zeroGoal: String = "Цель не может быть нулём"
 
 
     override fun onCreateView(
@@ -87,12 +88,17 @@ class ProfileFragment : Fragment() {
         val goal =
             requireView().findViewById<TextInputEditText>(R.id.goalEditText).text.toString().trim()
         if (name.isNotEmpty() && age.isNotEmpty() && goal.isNotEmpty()) {
-            if (db.getProfileData() == null) {
-                db.addProfileData(name, age.toInt(), goal.toInt())
-            } else {
-                db.updateProfileData(name, age.toInt(), goal.toInt())
+            if (goal == "0"){
+                Toast.makeText(requireContext(), zeroGoal, Toast.LENGTH_SHORT).show()
             }
-            Toast.makeText(requireContext(), saved, Toast.LENGTH_SHORT).show()
+            else {
+                if (db.getProfileData() == null) {
+                    db.addProfileData(name, age.toInt(), goal.toInt())
+                } else {
+                    db.updateProfileData(name, age.toInt(), goal.toInt())
+                }
+                Toast.makeText(requireContext(), saved, Toast.LENGTH_SHORT).show()
+            }
         } else {
             Toast.makeText(requireContext(), warning, Toast.LENGTH_SHORT).show()
         }
