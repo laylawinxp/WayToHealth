@@ -408,7 +408,7 @@ class TrainingFragment : Fragment() {
             val typeValue = layout.findViewById<TextView>(R.id.type)
             typeValue.text = type
             val levelLabel = layout.findViewById<TextView>(R.id.suggestedLevel)
-            levelLabel.text = "Рекомендуемый тип тренировки:"
+            levelLabel.text = "Рекомендуемый уровень тренировки:"
             val levelValue = layout.findViewById<TextView>(R.id.level)
             levelValue.text = level
         } else {
