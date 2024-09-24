@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
@@ -35,14 +36,14 @@ class TrainingFragment : Fragment() {
         super.onResume()
 
         val balancingIB = requireView().findViewById<ImageButton>(R.id.balancing_ib)
-        val enduranceIB = requireView().findViewById<ImageButton>(R.id.endurance_ib)
+        val flexibilityIB = requireView().findViewById<ImageButton>(R.id.flexibility_ib)
         val powerIB = requireView().findViewById<ImageButton>(R.id.power_ib)
         val easyIB = requireView().findViewById<ImageButton>(R.id.easy_ib)
         val normIB = requireView().findViewById<ImageButton>(R.id.norm_ib)
         val hardIB = requireView().findViewById<ImageButton>(R.id.hard_ib)
 
         val balancingTXT = requireView().findViewById<TextView>(R.id.balancing_txt)
-        val enduranceTXT = requireView().findViewById<TextView>(R.id.endurance_txt)
+        val flexibilityTXT = requireView().findViewById<TextView>(R.id.flexibility_txt)
         val powerTXT = requireView().findViewById<TextView>(R.id.power_txt)
         val easyTXT = requireView().findViewById<TextView>(R.id.easy_txt)
         val normTXT = requireView().findViewById<TextView>(R.id.norm_txt)
@@ -53,35 +54,35 @@ class TrainingFragment : Fragment() {
 
         balancingIB.setOnClickListener {
             balancingIB.setImageResource(R.drawable.balancing_selected)
-            enduranceIB.setImageResource(R.drawable.endurance)
+            flexibilityIB.setImageResource(R.drawable.flexibility)
             powerIB.setImageResource(R.drawable.power)
 
             balancingTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
-            enduranceTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.pink))
+            flexibilityTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.pink))
             powerTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.pink))
 
             type = "balancing"
         }
 
-        enduranceIB.setOnClickListener {
+        flexibilityIB.setOnClickListener {
             balancingIB.setImageResource(R.drawable.balancing)
-            enduranceIB.setImageResource(R.drawable.endurance_selected)
+            flexibilityIB.setImageResource(R.drawable.flexibility_selected)
             powerIB.setImageResource(R.drawable.power)
 
             balancingTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.pink))
-            enduranceTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
+            flexibilityTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
             powerTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.pink))
 
-            type = "endurance"
+            type = "flexibility"
         }
 
         powerIB.setOnClickListener {
             balancingIB.setImageResource(R.drawable.balancing)
-            enduranceIB.setImageResource(R.drawable.endurance)
+            flexibilityIB.setImageResource(R.drawable.flexibility)
             powerIB.setImageResource(R.drawable.power_selected)
 
             balancingTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.pink))
-            enduranceTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.pink))
+            flexibilityTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.pink))
             powerTXT.setTextColor(ContextCompat.getColor(requireContext(), R.color.green))
 
             type = "power"
@@ -130,7 +131,111 @@ class TrainingFragment : Fragment() {
             val myDialog = Dialog(requireContext())
             myDialog.setContentView(dialogBinding)
             myDialog.setCancelable(true)
+            myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+            myDialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             myDialog.show()
+
+            val trainingName: TextView = dialogBinding.findViewById(R.id.trainingName)
+
+            val text1: TextView = dialogBinding.findViewById(R.id.text1)
+            val text2: TextView = dialogBinding.findViewById(R.id.text2)
+            val text3: TextView = dialogBinding.findViewById(R.id.text3)
+
+            val img1: ImageView = dialogBinding.findViewById(R.id.img1)
+            val img2: ImageView = dialogBinding.findViewById(R.id.img2)
+            val img3: ImageView = dialogBinding.findViewById(R.id.img3)
+
+            if (type == "balancing" && level == "easy"){
+                trainingName.text = "Ходьба с пятки на носок"
+                text1.text = " 1. Пятку одной ноги ставим перед носком другой. Носок и пятка должны соприкасаться или почти соприкасаться"
+                text2.text = " 2. Вытяните руки в стороны, подтяните живот, спина прямая. Выберите точку перед собой и смотрите на нее, двигаясь по направлению к этой точке"
+                text3.text = " 3. Таким же образом меняйте ноги, делая шаги вперед. Сделайте 20 шагов"
+
+                img1.setImageResource(R.drawable.steps1)
+                img2.setImageResource(R.drawable.steps2)
+                img3.setImageResource(R.drawable.steps3)
+            }
+            if (type == "balancing" && level == "norm"){
+                trainingName.text = "Балансирование при ходьбе"
+                text1.text = " 1. Вытяните руки в стороны, подтяните живот, спина прямая"
+                text2.text = " 2. Выберите точку перед собой и смотрите на нее, двигаясь по направлению к этой точке"
+                text3.text = " 3. Двигайтесь по прямой линии, поднимая одну ногу согнутую в колене, и переставляя ее вперед. Сделайте 20 шагов, меняя ноги"
+
+                img1.setImageResource(R.drawable.walking1)
+                img2.setImageResource(R.drawable.steps2)
+                img3.setImageResource(R.drawable.steps3)
+            }
+
+            if (type == "balancing" && level == "hard"){
+                trainingName.text = "Балансирование на одной ноге с опорой на стул"
+                text1.text = " 1. Живот подтянут, спина прямая, подбородок приподнят, взгляд вперед"
+                text2.text = " 2. Стоя на одной ноге, держитесь за стул. Сохраняйте эту позицию 10—15 секунд"
+                text3.text = " 3. Повторите 10—15 раз на одной ноге, затем на другой. Если вы уверены в себе, можете закрыть глаза"
+
+                img1.setImageResource(R.drawable.chair1)
+                img2.setImageResource(R.drawable.chair2)
+            }
+
+            if (type == "flexibility" && level == "easy"){
+                trainingName.text = "Растяжка квадрицепсов стоя"
+                text1.text = " 1. Сядьте на высокий стул и держите бедра, колени и пальцы ног обращенными вперед. Поднимите левую руку, правой держитесь за стул"
+                text2.text = " 2. Удерживая туловище вытянутым, медленно наклонитесь влево. Задержитесь в этом положении от 10 до 30 секунд, вернитесь в центр"
+                text3.text = " 3. Повторите ту же растяжку с правой стороны"
+
+                img1.setImageResource(R.drawable.flex_chair2)
+            }
+
+            if (type == "flexibility" && level == "norm"){
+                trainingName.text = "Боковая растяжка над головой"
+                text1.text = " 1. Живот подтянут, спина прямая, подбородок приподнят, взгляд вперед"
+                text2.text = " 2. Стоя на одной ноге, держитесь за стул, возьмите правой рукой правую нору. Сохраняйте эту позицию 10—15 секунд"
+                text3.text = " 3. Повторите 5—10 раз на одной ноге, затем на другой"
+
+                img1.setImageResource(R.drawable.flex_chair)
+            }
+
+            if (type == "flexibility" && level == "hard"){
+                trainingName.text = "Выпад в кресле"
+                text1.text = " 1. Возьмите крепкий стул. Затем встаньте в полуметре от стула позади вас и положите голень на сиденье стула"
+                text2.text = " 2. Слегка согните переднее колено, толкая бедра вперед и вниз. Удерживайте это положение от 10 до 30 секунд"
+                text3.text = " 3. Затем повторите с противоположной стороной"
+
+                img1.setImageResource(R.drawable.hard_flex1)
+                img2.setImageResource(R.drawable.hard_flex2)
+            }
+
+            if (type == "power" && level == "easy"){
+                trainingName.text = "Работа с эспандером или мячом"
+                text1.text = " 1. Возьмите в руку теннисный мяч или эспандер"
+                text2.text = " 2. Медленно сжимайте мяч в руке на 3—5 секунд"
+                text3.text = " 3. Медленно разожмите руку. Повторяйте по 10—15 раз каждой рукой"
+
+                img1.setImageResource(R.drawable.ball1)
+                img2.setImageResource(R.drawable.ball2)
+                img3.setImageResource(R.drawable.ball3)
+            }
+
+            if (type == "power" && level == "norm"){
+                trainingName.text = "Приседания со стулом"
+                text1.text = " 1. Сядьте на  стул, стопы плотно прилегают к  полу, выпрямите спину, сложите руки на груди, дыхание глубокое, медленное"
+                text2.text = " 2. Вытяните руки перед собой параллельно полу и на выдохе медленно поднимайтесь"
+                text3.text = " 3. На вдохе сядьте обратно. Спина прямая.Повторите 10—15 раз"
+
+                img1.setImageResource(R.drawable.power_chair1)
+                img2.setImageResource(R.drawable.power_chair2)
+                img3.setImageResource(R.drawable.power_chair3)
+            }
+
+            if (type == "power" && level == "hard"){
+                trainingName.text = "Упражнения для рук"
+                text1.text = " 1. Упражнение можно выполнять как стоя, так и сидя на стуле. Ноги на полу, плечи расправлены. Возьмите в руки гантели или другие предметы весом 0,5—1,5кг"
+                text2.text = " 2. Поднимите и согните руки в локтях 90°"
+                text3.text = " 3. На  выдохе вытяните руки вверх и  оставайтесь в такой позиции в течение секунды. На вдохе опустите руки. Повторяйте по 10—15 раз"
+
+                img1.setImageResource(R.drawable.power_drumbbell1)
+                img2.setImageResource(R.drawable.power_drumbbell2)
+                img3.setImageResource(R.drawable.power_drumbbell3)
+            }
 
             val calendar = Calendar.getInstance()
             val db = DBHelper(requireContext(), null)
@@ -157,6 +262,7 @@ class TrainingFragment : Fragment() {
             myDialog.setContentView(dialogBinding)
             myDialog.setCancelable(true)
             myDialog.window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
+            myDialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
             myDialog.show()
 
             val questions = arrayOf(

@@ -148,8 +148,8 @@
                             android:layout_height="118dp"
                             android:layout_gravity="center"
                             android:background="@color/white"
-                            android:scaleX="0.6"
-                            android:scaleY="0.6"
+                            android:scaleX="0.7"
+                            android:scaleY="0.7"
                             android:src="@drawable/balancing_selected" />
 
                         <TextView
@@ -173,23 +173,23 @@
                         android:background="@color/white">
 
                         <ImageButton
-                            android:id="@+id/endurance_ib"
-                            android:layout_width="107dp"
+                            android:id="@+id/flexibility_ib"
+                            android:layout_width="97dp"
                             android:layout_height="118dp"
                             android:background="@color/white"
-                            android:scaleX="0.5"
+                            android:scaleX="0.7"
                             android:layout_gravity="center"
-                            android:scaleY="0.5"
-                            app:srcCompat="@drawable/endurance" />
+                            android:scaleY="0.7"
+                            app:srcCompat="@drawable/flexibility" />
 
                         <TextView
-                            android:id="@+id/endurance_txt"
+                            android:id="@+id/flexibility_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:text="Выносливость"
+                            android:text="Гибкость"
                             android:textColor="@color/pink"
                             android:fontFamily="@font/ostrovsky_bold"
                             android:textStyle="bold" />
@@ -208,8 +208,8 @@
                             android:layout_width="101dp"
                             android:layout_height="118dp"
                             android:background="@color/white"
-                            android:scaleX="0.5"
-                            android:scaleY="0.5"
+                            android:scaleX="0.6"
+                            android:scaleY="0.6"
                             app:srcCompat="@drawable/power"/>
 
                         <TextView
