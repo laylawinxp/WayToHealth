@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.net.Uri
 import android.util.Log
 
 class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
@@ -30,6 +29,18 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         val result = cursor.moveToFirst()
         cursor.close()
         return result
+    }
+
+    fun getTrainingCount(): Int {
+        val db = this.readableDatabase
+        var totalTraining = 0
+
+        val cursor = db.rawQuery("SELECT SUM(training) AS total_training FROM trainings", null)
+        if (cursor.moveToFirst()) {
+            totalTraining = cursor.getInt(0)
+        }
+        cursor.close()
+        return totalTraining
     }
 
     fun addProfileData(name: String, age: Int, goal: Int) {

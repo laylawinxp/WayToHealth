@@ -54,6 +54,8 @@ class ProfileFragment : Fragment() {
         saveButton.setOnClickListener {
             saveProfileData(db)
         }
+        changeIfTypesAchieved()
+        changeIfCountAchieved(db)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -64,6 +66,30 @@ class ProfileFragment : Fragment() {
             selectedImageUri?.let { uri ->
                 saveImageToAppFiles(requireContext(), uri)
             }
+        }
+    }
+
+    private fun changeIfTypesAchieved() {
+        val sharedPrefs = requireContext().getSharedPreferences("TypePrefs", Context.MODE_PRIVATE)
+
+        val balancingAchievement =
+            sharedPrefs.getString("balancing", false.toString()) == true.toString()
+        val flexibilityAchievement =
+            sharedPrefs.getString("flexibility", false.toString()) == true.toString()
+        val powerAchievement = sharedPrefs.getString("power", false.toString()) == true.toString()
+
+        val achiveFlexibility = requireView().findViewById<ImageView>(R.id.ivIcon7)
+        val achivePower = requireView().findViewById<ImageView>(R.id.ivIcon8)
+        val achiveBalance = requireView().findViewById<ImageView>(R.id.ivIcon9)
+
+        if (flexibilityAchievement) {
+            achiveFlexibility.setImageResource(R.drawable.flexibility_c)
+        }
+        if (powerAchievement) {
+            achivePower.setImageResource(R.drawable.power_c)
+        }
+        if (balancingAchievement) {
+            achiveBalance.setImageResource(R.drawable.balance_c)
         }
     }
 
@@ -80,6 +106,37 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun changeIfCountAchieved(db: DBHelper) {
+        val count: Int = db.getTrainingCount()
+        val achieve1 = requireView().findViewById<ImageView>(R.id.ivIcon1)
+        val achieve5 = requireView().findViewById<ImageView>(R.id.ivIcon2)
+        val achieve15 = requireView().findViewById<ImageView>(R.id.ivIcon3)
+        val achieve30 = requireView().findViewById<ImageView>(R.id.ivIcon4)
+        val achieve50 = requireView().findViewById<ImageView>(R.id.ivIcon5)
+        val achieve100 = requireView().findViewById<ImageView>(R.id.ivIcon6)
+
+        if (count >= 1) {
+            achieve1.setImageResource(R.drawable.one_day_c)
+        }
+        if (count >= 5) {
+            achieve5.setImageResource(R.drawable.five_days_c)
+        }
+        if (count >= 15) {
+            achieve15.setImageResource(R.drawable.fifteen_days_c)
+
+        }
+        if (count >= 30) {
+            achieve30.setImageResource(R.drawable.thirty_days_c)
+        }
+        if (count >= 50) {
+            achieve50.setImageResource(R.drawable.fifty_days_c)
+        }
+        if (count >= 100) {
+            achieve100.setImageResource(R.drawable.hundred_days_c)
+
+        }
+    }
+
     private fun saveProfileData(db: DBHelper) {
         val name =
             requireView().findViewById<TextInputEditText>(R.id.nameEditText).text.toString().trim()
@@ -88,10 +145,9 @@ class ProfileFragment : Fragment() {
         val goal =
             requireView().findViewById<TextInputEditText>(R.id.goalEditText).text.toString().trim()
         if (name.isNotEmpty() && age.isNotEmpty() && goal.isNotEmpty()) {
-            if (goal == "0"){
+            if (goal == "0") {
                 Toast.makeText(requireContext(), zeroGoal, Toast.LENGTH_SHORT).show()
-            }
-            else {
+            } else {
                 if (db.getProfileData() == null) {
                     db.addProfileData(name, age.toInt(), goal.toInt())
                 } else {
