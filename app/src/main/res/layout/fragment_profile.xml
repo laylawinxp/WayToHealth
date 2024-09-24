@@ -181,7 +181,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/one_day" />
+                android:src="@drawable/one_day_bw" />
 
             <ImageView
                 android:id="@+id/ivIcon2"
@@ -210,7 +210,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:src="@drawable/thirty_days" />
+                android:src="@drawable/thirty_days_bw" />
 
             <ImageView
                 android:id="@+id/ivIcon5"
