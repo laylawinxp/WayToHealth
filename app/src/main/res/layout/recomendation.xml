@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/suggestedType"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:fontFamily="@font/ostrovsky_bold"
+        android:padding="10dp"
+        android:background="@drawable/rectangle_pink"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/type"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:fontFamily="@font/ostrovsky_bold"
+        android:padding="10dp"
+        android:background="@drawable/rectangle_white"
+        android:textColor="@color/pink"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/suggestedLevel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:fontFamily="@font/ostrovsky_bold"
+        android:padding="10dp"
+        android:background="@drawable/rectangle_green"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/level"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:fontFamily="@font/ostrovsky_bold"
+        android:padding="10dp"
+        android:background="@drawable/rectangle_white"
+        android:textColor="@color/green"
+        android:textSize="20sp" />
+</LinearLayout>
