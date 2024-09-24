@@ -20,11 +20,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.waytohealth.DBHelper
 import com.example.waytohealth.R
-import com.google.android.material.snackbar.Snackbar
 import java.util.Calendar
 
 class TrainingFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -148,6 +146,19 @@ class TrainingFragment : Fragment() {
             val img1: ImageView = dialogBinding.findViewById(R.id.img1)
             val img2: ImageView = dialogBinding.findViewById(R.id.img2)
             val img3: ImageView = dialogBinding.findViewById(R.id.img3)
+
+            val sharedPrefs =
+                requireContext().getSharedPreferences("TypePrefs", Context.MODE_PRIVATE)
+            with(sharedPrefs.edit()) {
+                if (type == "balancing") {
+                    putString("balancing", true.toString())
+                } else if (type == "power") {
+                    putString("power", true.toString())
+                } else if (type == "flexibility") {
+                    putString("flexibility", true.toString())
+                }
+                apply()
+            }
 
             if (type == "balancing" && level == "easy") {
                 trainingName.text = "Ходьба с пятки на носок"

@@ -1,6 +1,5 @@
 package com.example.waytohealth
 
-import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.enableEdgeToEdge
@@ -36,13 +35,15 @@ class MainActivity : AppCompatActivity() {
         )
 
         bottomNavigation.setOnClickMenuListener {
-            when(it.id){
+            when (it.id) {
                 1 -> {
                     replaceFragment(HomeFragment())
                 }
+
                 2 -> {
                     replaceFragment(TrainingFragment())
                 }
+
                 3 -> {
                     replaceFragment(ProfileFragment())
                 }
@@ -53,7 +54,8 @@ class MainActivity : AppCompatActivity() {
 
         window.setFlags(
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
     private fun replaceFragment(fragment: Fragment) {
