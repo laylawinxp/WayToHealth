@@ -72,5 +72,5 @@
     <img src="https://github.com/user-attachments/assets/1f1cf896-e6f0-4331-9ac1-c8e80085cf17" alt="1" width="600" />
 </div>
 
-> **Credit:** некоторые иконки были взяты с сайта [flaticon](flaticon.com) 
+> **Credit:** некоторые иконки были взяты с сайта [flaticon](#flaticon.com) 
 
