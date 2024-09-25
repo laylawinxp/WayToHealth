@@ -199,7 +199,7 @@ class TrainingFragment : Fragment() {
             }
 
             if (type == "flexibility" && level == "easy") {
-                trainingName.text = "Растяжка квадрицепсов стоя"
+                trainingName.text = "Боковая растяжка над головой"
                 text1.text =
                     " 1. Сядьте на высокий стул и держите бедра, колени и пальцы ног обращенными вперед. Поднимите левую руку, правой держитесь за стул"
                 text2.text =
