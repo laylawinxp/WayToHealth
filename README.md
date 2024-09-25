@@ -66,7 +66,7 @@
     <img src="https://github.com/user-attachments/assets/c5ba28a5-6a0a-44ae-90f4-5cf910aa6b6a" alt="1" width="400" />
 </div>
 
-Кроме того, проект был успешно представлен на **_Алмазовском международном медицинском формуе 2024_**
+Кроме того, проект был успешно представлен на **_Алмазовском международном медицинском форуме 2024_**
 
 <div style="display: flex; justify-content: space-around;">
     <img src="https://github.com/user-attachments/assets/1f1cf896-e6f0-4331-9ac1-c8e80085cf17" alt="1" width="600" />
